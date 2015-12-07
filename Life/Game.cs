@@ -3,6 +3,11 @@ using System.Linq;
 
 namespace ConwaysGameOfLife
 {
+	/*
+	Избавьте класс Game от зависимости от IGameUI.
+	Вместо "ПолучателяДанных" GameUI, возвращайте необходимые данные для его работы.
+	Преобразуйте класс Game в неизменяемый
+	*/
 	public class Game : IReadonlyField
 	{
 		private readonly int width;
