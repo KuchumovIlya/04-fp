@@ -15,7 +15,7 @@ namespace FCloudTests
             const string expected = "{\"analysis\":[{\"lex\":\"бежать\",\"gr\":\"V,нп=(инф,несов|инф,сов)\"}],\"text\":\"бежать\"}";
             using (var parser = new MystemReader(PathToMystem))
             {
-                var actual = parser.ReadJson(word);
+                var actual = parser.ReadMystemDataInJson(word);
                 Assert.AreEqual(expected, actual);
             }
         }
@@ -29,7 +29,7 @@ namespace FCloudTests
             {
                 for (var count = 0; count < 5; count++)
                 {
-                    var actual = parser.ReadJson(word);
+                    var actual = parser.ReadMystemDataInJson(word);
                     Assert.AreEqual(expected, actual);
                 }
             }
@@ -42,7 +42,7 @@ namespace FCloudTests
             const string expected = "{\"analysis\":[],\"text\":\"1234\"}";
             using (var parser = new MystemReader(PathToMystem))
             {
-                var actual = parser.ReadJson(word);
+                var actual = parser.ReadMystemDataInJson(word);
                 Assert.AreEqual(expected, actual);
             }
         }
@@ -54,7 +54,7 @@ namespace FCloudTests
             const string expected = "{\"analysis\":[],\"text\":\"home\"}";
             using (var parser = new MystemReader(PathToMystem))
             {
-                var actual = parser.ReadJson(word);
+                var actual = parser.ReadMystemDataInJson(word);
                 Assert.AreEqual(expected, actual);
             }
         }

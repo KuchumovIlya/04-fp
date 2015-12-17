@@ -30,7 +30,7 @@ namespace FCloud.DataReading
             return Regex.IsMatch(c.ToString(), @"\p{IsCyrillic}");
         }
 
-        public string ReadJson(string word)
+        public string ReadMystemDataInJson(string word)
         {
             if (!word.All(IsRussianLetter))
                 return string.Format("{{\"analysis\":[],\"text\":\"{0}\"}}", word);
