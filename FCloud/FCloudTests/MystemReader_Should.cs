@@ -21,6 +21,21 @@ namespace FCloudTests
         }
 
         [Test]
+        public void ReadDataForRussianWordsManyTimes()
+        {
+            const string word = "бежать";
+            const string expected = "{\"analysis\":[{\"lex\":\"бежать\",\"gr\":\"V,нп=(инф,несов|инф,сов)\"}],\"text\":\"бежать\"}";
+            using (var parser = new MystemReader(PathToMystem))
+            {
+                for (var count = 0; count < 5; count++)
+                {
+                    var actual = parser.ReadJson(word);
+                    Assert.AreEqual(expected, actual);
+                }
+            }
+        }
+
+        [Test]
         public void ReadEmptyDataForDigits()
         {
             const string word = "1234";

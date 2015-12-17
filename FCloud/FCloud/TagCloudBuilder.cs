@@ -7,6 +7,8 @@ namespace FCloud
 {
     public class TagCloudBuilder
     {
+        //text to parsed text?
+
         public Bitmap Build(string text,
             Func<string, IEnumerable<string>> parseWords,
             Func<string, string> normalizeWord,
