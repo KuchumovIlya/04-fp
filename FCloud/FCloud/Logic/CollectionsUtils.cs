@@ -21,13 +21,6 @@ namespace FCloud.Logic
             return sourceArray;
         }
 
-        public static IEnumerable<T> WeightedRandomShuffleWithUnique<T>(this IEnumerable<T> source, Random random)
-        {
-            return source
-                .RandomShuffle(random)
-                .Distinct();
-        }
-
         public static IEnumerable<Tuple<T, double>> CalculateRate<T>(this IEnumerable<T> source)
         {
             var sourceArray = source.ToArray();
