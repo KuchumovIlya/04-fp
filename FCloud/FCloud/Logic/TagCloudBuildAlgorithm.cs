@@ -19,12 +19,34 @@ namespace FCloud.Logic
 
         public Bitmap BuildBitmap(IEnumerable<string> words)
         {
-            var wordsWithRate = words
-                .RandomShuffle(random)
-                .CalculateRate()
-                .Distinct();
-
+            var shuffledWords = RandomShuffle(words);
+            var wordsWithRate = CalculateRate(shuffledWords).Distinct();
             return drawWordsWithRateOnBitmap(wordsWithRate);
-        }   
+        }
+
+        public IEnumerable<T> RandomShuffle<T>(IEnumerable<T> source)
+        {
+            var sourceArray = source.ToArray();
+            for (var i = 1; i < sourceArray.Length; i++)
+            {
+                var swapIndex = random.Next(i - 1);
+                var temp = sourceArray[swapIndex];
+                sourceArray[swapIndex] = sourceArray[i];
+                sourceArray[i] = temp;
+            }
+            return sourceArray;
+        }
+
+        public IEnumerable<Tuple<string, double>> CalculateRate(IEnumerable<string> words)
+        {
+            var sourceArray = words.ToArray();
+
+            var count = sourceArray
+                .GroupBy(x => x)
+                .ToDictionary(g => g.Key, g => g.Count());
+            var maxCount = count.Max(t => t.Value);
+
+            return sourceArray.Select(x => Tuple.Create(x, (double)count[x] / maxCount));
+        }
     }
 }
