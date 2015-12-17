@@ -10,6 +10,7 @@ namespace FCloud.Logic
         private readonly Random random;
         private readonly Func<IEnumerable<Tuple<string, double>>, Bitmap> drawWordsWithRateOnBitmap;
 
+        //todo add unit tests
         public TagCloudBuildAlgorithm(Random random, Func<IEnumerable<Tuple<string, double>>, Bitmap> drawWordsWithRateOnBitmap)
         {
             this.random = random;

@@ -47,6 +47,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,7 +60,9 @@
     <Compile Include="DataReading\MystemWordsFilter.cs" />
     <Compile Include="DataReading\WordsParser.cs" />
     <Compile Include="DataReading\MystemWordsNormalizer.cs" />
+    <Compile Include="DataWriting\ImageBitmapWriter.cs" />
     <Compile Include="Logic\CollectionsUtils.cs" />
+    <Compile Include="Logic\TagCloudBuildAlgorithm.cs" />
     <Compile Include="Logic\TagCloudPainter.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
@@ -67,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

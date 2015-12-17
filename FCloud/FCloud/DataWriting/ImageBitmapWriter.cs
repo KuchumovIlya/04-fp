@@ -6,6 +6,7 @@ namespace FCloud.DataWriting
 {
     public class ImageBitmapWriter
     {
+        //todo add unit tests
         public void WriteBitmap(Bitmap bitmap, Options options)
         {
             var toImageFormatConverter = new Dictionary<string, ImageFormat>

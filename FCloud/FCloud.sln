@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCloud", "FCloud\FCloud.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCloudTests", "FCloudTests\FCloudTests.csproj", "{C4278CD2-BA29-4D4C-8539-A3ECF63F1519}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleFCloud", "ConsoleFCloud\ConsoleFCloud.csproj", "{0931D1F1-2476-4DC5-9196-993E877C7989}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{C4278CD2-BA29-4D4C-8539-A3ECF63F1519}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4278CD2-BA29-4D4C-8539-A3ECF63F1519}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4278CD2-BA29-4D4C-8539-A3ECF63F1519}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0931D1F1-2476-4DC5-9196-993E877C7989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0931D1F1-2476-4DC5-9196-993E877C7989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0931D1F1-2476-4DC5-9196-993E877C7989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0931D1F1-2476-4DC5-9196-993E877C7989}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
