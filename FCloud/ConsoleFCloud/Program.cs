@@ -13,16 +13,13 @@ namespace ConsoleFCloud
         {
             var options = new Options();
             if (!CommandLine.Parser.Default.ParseArguments(Environment.GetCommandLineArgs(), options))
-            {
-                //maybe show usage
                 return;
-            }
             
             var parser = new WordsParser();
             var reader = new MystemReader(options.PathToMystem);
             var normalizer = new MystemWordsNormalizer(reader.ReadMystemDataInJson);
             var filter = new MystemWordsFilter(reader.ReadMystemDataInJson);
-            var random = new Random();
+            var random = new Random(20);
             var painter = new TagCloudPainter(options, random);
             var algorithm = new TagCloudBuildAlgorithm(random, painter.DrawWordsWithRateOnBitmap);
             var builder = new TagCloudBuilder();

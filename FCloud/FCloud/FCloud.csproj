@@ -61,7 +61,6 @@
     <Compile Include="DataReading\WordsParser.cs" />
     <Compile Include="DataReading\MystemWordsNormalizer.cs" />
     <Compile Include="DataWriting\ImageBitmapWriter.cs" />
-    <Compile Include="Logic\CollectionsUtils.cs" />
     <Compile Include="Logic\TagCloudBuildAlgorithm.cs" />
     <Compile Include="Logic\TagCloudPainter.cs" />
     <Compile Include="Options.cs" />
@@ -71,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
