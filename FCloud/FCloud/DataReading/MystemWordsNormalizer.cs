@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 
 namespace FCloud.DataReading
 {
-    public class MystemWordNormalizer
+    public class MystemWordsNormalizer
     {
         private readonly Func<string, string> readMystemDataInJson;
 
-        public MystemWordNormalizer(Func<string, string> readMystemDataInJson)
+        public MystemWordsNormalizer(Func<string, string> readMystemDataInJson)
         {
             this.readMystemDataInJson = readMystemDataInJson;
         }
