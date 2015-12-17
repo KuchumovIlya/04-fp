@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MystemReader_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordsParser_Should.cs" />
   </ItemGroup>
