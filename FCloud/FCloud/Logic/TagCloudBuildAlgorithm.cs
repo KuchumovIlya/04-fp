@@ -8,10 +8,10 @@ namespace FCloud.Logic
     public class TagCloudBuildAlgorithm
     {
         private readonly Random random;
-        private readonly Func<IEnumerable<Tuple<string, double>>, Bitmap> drawWordsWithRateOnBitmap;
+        private readonly Func<IEnumerable<RatedWord>, Bitmap> drawWordsWithRateOnBitmap;
 
         //todo add unit tests
-        public TagCloudBuildAlgorithm(Random random, Func<IEnumerable<Tuple<string, double>>, Bitmap> drawWordsWithRateOnBitmap)
+        public TagCloudBuildAlgorithm(Random random, Func<IEnumerable<RatedWord>, Bitmap> drawWordsWithRateOnBitmap)
         {
             this.random = random;
             this.drawWordsWithRateOnBitmap = drawWordsWithRateOnBitmap;
@@ -37,7 +37,7 @@ namespace FCloud.Logic
             return sourceArray;
         }
 
-        public IEnumerable<Tuple<string, double>> CalculateRate(IEnumerable<string> words)
+        public IEnumerable<RatedWord> CalculateRate(IEnumerable<string> words)
         {
             var sourceArray = words.ToArray();
 
@@ -46,7 +46,7 @@ namespace FCloud.Logic
                 .ToDictionary(g => g.Key, g => g.Count());
             var maxCount = count.Max(t => t.Value);
 
-            return sourceArray.Select(x => Tuple.Create(x, (double)count[x] / maxCount));
+            return sourceArray.Select(x => new RatedWord { Word = x, Rate = (double)count[x] / maxCount});
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace FCloud.Logic
@@ -16,48 +17,107 @@ namespace FCloud.Logic
             this.random = random;
         }
 
-        public Bitmap DrawWordsWithRateOnBitmap(IEnumerable<Tuple<string, double>> wordsWithRate)
+        public Bitmap DrawWordsWithRateOnBitmap(IEnumerable<RatedWord> ratedWords)
+        {
+            var lastWordLocation = new Point(0, 0);
+            var lastWordBox = new Size(0, 0);
+
+            var wordPlacements = ratedWords
+                .Select(x => new WordBox(x, GetWordBox(x)))
+                .Where(x => x.Box.Width <= options.Width)
+                .Where(x => x.Box.Height <= options.Height)
+                .Select(x =>
+                {
+                    lastWordLocation = GetNewWordLocation(lastWordLocation, lastWordBox, x.Box.Width, x.Box.Height);
+                    lastWordBox = x.Box;
+                    return new WordPlacement(x.RatedWord, lastWordLocation, x.Box);
+                })
+                .Where(x => IsInBoundingBox(x.Location, x.Box.Width, x.Box.Height));
+
+            return Draw(wordPlacements);
+        }
+
+        private Point GetNewWordLocation(Point oldWordLocation, Size oldWordBox, int newWordWidth, int newWordHeight)
+        {
+            var newLocation = oldWordLocation + new Size(oldWordBox.Width, 0);
+            return IsInBoundingBox(newLocation, newWordWidth, newWordHeight)
+                ? newLocation
+                : MoveWordToNewLine(oldWordLocation, newWordWidth, newWordHeight);
+        }
+
+        private Point MoveWordToNewLine(Point location, int wordWidth, int wordHeight)
+        {
+            var widthMaximumShift = Math.Min(options.Width - wordWidth, wordWidth);
+            var newX = random.Next(widthMaximumShift);
+            var newY = location.Y + wordHeight;
+            return new Point(newX, newY);
+        }
+
+        private bool IsInBoundingBox(Point location, int wordWidth, int wordHeight)
+        {
+            return 0 <= location.X && location.X + wordWidth < options.Width &&
+                   0 <= location.Y && location.Y + wordHeight < options.Height;
+        }
+
+        private struct WordPlacement
+        {
+            public RatedWord RatedWord { get; private set; }
+            public Point Location { get; private set; }
+            public Size Box { get; private set; }
+
+            public WordPlacement(RatedWord ratedWord, Point location, Size box) 
+                : this()
+            {
+                RatedWord = ratedWord;
+                Location = location;
+                Box = box;
+            }
+        }
+
+        private struct WordBox
+        {
+            public RatedWord RatedWord { get; private set; }
+            public Size Box { get; private set; }
+
+            public WordBox(RatedWord ratedWord, Size box) 
+                : this()
+            {
+                RatedWord = ratedWord;
+                Box = box;
+            }
+        }
+
+        private Bitmap Draw(IEnumerable<WordPlacement> wordPlacements)
         {
             var bitmap = new Bitmap(options.Width, options.Height);
-            var location = new Point(0, 0);
-
-            using (var g = Graphics.FromImage(bitmap))
+            using (var graphics = Graphics.FromImage(bitmap))
             {
-                g.Clear(Color.AliceBlue);
-                foreach (var wordWithRate in wordsWithRate)
-                    DrawWordWithRateOnBitmap(g, wordWithRate.Item1, wordWithRate.Item2, ref location);
+                graphics.Clear(Color.AliceBlue);
+                foreach (var wordPlacement in wordPlacements)
+                {
+                    var word = wordPlacement.RatedWord.Word;
+                    var font = CreateFont(wordPlacement.RatedWord.Rate);
+                    var brush = CreateBrush(wordPlacement.RatedWord.Rate);
+                    graphics.DrawString(word, font, brush, wordPlacement.Location.X, wordPlacement.Location.Y);
+                }
             }
             return bitmap;
         }
 
-        private void DrawWordWithRateOnBitmap(Graphics g, string word, double rate, ref Point location)
+        private Size GetWordBox(RatedWord ratedWord)
         {
-            var wordWidth = word.Length * options.FontSize;
-            var wordHeight = options.FontSize;
-            if (wordWidth > options.Width)
-                return;
-            var drawLocation = GetWordLocation(ref location, wordWidth, wordHeight);
-            if (drawLocation.X == -1)
-                return;
-            var font = new Font(FontFamily.GenericMonospace, options.FontSize * (float)Math.Pow(rate, 0.07));
-            var color = ControlPaint.Dark(Color.Blue, (float)Math.Pow(rate, 0.2) + (float)0.5);
-            var pen = new Pen(color);
-            g.DrawString(word, font, pen.Brush, drawLocation.X, drawLocation.Y);
+            return new Size(ratedWord.Word.Length * options.FontSize, options.FontSize);
         }
 
-        private Point GetWordLocation(ref Point location, int wordWidth, int wordHeight)
+        private Font CreateFont(double rate)
         {
-            location.X += wordWidth;
+            return new Font(FontFamily.GenericMonospace, options.FontSize * (float)Math.Pow(rate, 0.07));
+        }
 
-            if (location.X > options.Width)
-            {
-                var canAdd = Math.Min(options.Width - wordWidth, wordWidth);
-                location.X = wordWidth + random.Next(canAdd);
-                location.Y += wordHeight;
-            }
-
-            return location.Y + wordHeight < options.Height ?
-                new Point(location.X - wordWidth, location.Y) : new Point(-1, -1);
+        private static Brush CreateBrush(double rate)
+        {
+            var color = ControlPaint.Dark(Color.Blue, (float)Math.Pow(rate, 0.2) + (float)0.5);
+            return new Pen(color).Brush;
         }
     }
 }
